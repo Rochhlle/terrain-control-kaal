@@ -1,10 +1,22 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { ModeToggle } from "./ModeToggle";
 import { StatusBar } from "./StatusBar";
 import { Badge } from "@/components/ui/badge";
-import { Bell, Settings } from "lucide-react";
+import { Bell, Settings, Info } from "lucide-react";
+import { 
+  Tooltip, 
+  TooltipContent, 
+  TooltipProvider, 
+  TooltipTrigger 
+} from "@/components/ui/tooltip";
+import { 
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 interface HeaderProps {
   currentMode: "engineer" | "commander";
@@ -13,6 +25,10 @@ interface HeaderProps {
 
 export function Header({ currentMode, onModeChange }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
+  const [notifications, setNotifications] = useState<{ id: number; title: string; message: string }[]>([
+    { id: 1, title: "System Status", message: "All systems operational" },
+    { id: 2, title: "Update Available", message: "New terrain maps available for simulation" },
+  ]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,47 +43,140 @@ export function Header({ currentMode, onModeChange }: HeaderProps) {
   }, []);
 
   return (
-    <header
+    <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-black/80 backdrop-blur-md py-2 shadow-lg"
           : "bg-transparent py-4"
       }`}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ 
+        type: "spring", 
+        stiffness: 300, 
+        damping: 30,
+        delay: 0.2 
+      }}
     >
       <div className="container mx-auto flex items-center justify-between px-4">
-        <div className="flex items-center space-x-4">
+        <motion.div 
+          className="flex items-center space-x-4"
+          whileHover={{ scale: 1.02 }}
+        >
           <h1 
-            className="text-2xl font-bold tracking-tighter cursor-pointer"
+            className="text-2xl font-bold tracking-tighter cursor-pointer flex items-center"
             onClick={() => navigate("/")}
           >
-            PROJECT <span className="text-kaal-primary">KAAL</span>
+            PROJECT <span className="text-kaal-primary ml-1">KAAL</span>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Info size={16} className="ml-2 text-muted-foreground cursor-help" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Advanced terrain simulation and mission-readiness platform</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </h1>
           <Badge 
             variant="outline" 
-            className={`uppercase ${
+            className={`uppercase transition-colors duration-500 ${
               currentMode === "engineer" ? "border-blue-500 text-blue-500" : "border-red-500 text-red-500"
             }`}
           >
             {currentMode === "engineer" ? "Technical" : "Strategic"}
           </Badge>
-        </div>
+        </motion.div>
 
         <div className="flex items-center space-x-6">
           <ModeToggle currentMode={currentMode} onModeChange={onModeChange} />
           
           <div className="hidden md:flex items-center space-x-4">
-            <button className="p-2 rounded-full hover:bg-muted transition">
-              <Bell size={18} className="text-muted-foreground hover:text-foreground" />
-            </button>
-            <button className="p-2 rounded-full hover:bg-muted transition">
-              <Settings size={18} className="text-muted-foreground hover:text-foreground" />
-            </button>
+            <TooltipProvider>
+              <Popover>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <PopoverTrigger asChild>
+                      <motion.button 
+                        className="p-2 rounded-full hover:bg-muted transition relative"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Bell size={18} className="text-muted-foreground hover:text-foreground" />
+                        {notifications.length > 0 && (
+                          <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                        )}
+                      </motion.button>
+                    </PopoverTrigger>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>System notifications</p>
+                  </TooltipContent>
+                </Tooltip>
+                
+                <PopoverContent className="w-80 p-0">
+                  <div className="p-2 border-b">
+                    <h3 className="font-medium">Notifications</h3>
+                  </div>
+                  <div className="max-h-80 overflow-y-auto">
+                    <AnimatePresence>
+                      {notifications.length > 0 ? (
+                        notifications.map((notification) => (
+                          <motion.div
+                            key={notification.id}
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="p-3 border-b last:border-0 hover:bg-muted/50"
+                          >
+                            <h4 className="font-medium">{notification.title}</h4>
+                            <p className="text-sm text-muted-foreground">{notification.message}</p>
+                          </motion.div>
+                        ))
+                      ) : (
+                        <div className="p-4 text-center text-muted-foreground">
+                          No new notifications
+                        </div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                  {notifications.length > 0 && (
+                    <div className="p-2 border-t">
+                      <button 
+                        className="text-sm text-center w-full text-muted-foreground hover:text-foreground"
+                        onClick={() => setNotifications([])}
+                      >
+                        Clear all
+                      </button>
+                    </div>
+                  )}
+                </PopoverContent>
+              </Popover>
+            </TooltipProvider>
+            
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <motion.button 
+                    className="p-2 rounded-full hover:bg-muted transition"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Settings size={18} className="text-muted-foreground hover:text-foreground" />
+                  </motion.button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>System settings</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
       </div>
       <div className="px-4 mt-2">
         <StatusBar />
       </div>
-    </header>
+    </motion.header>
   );
 }

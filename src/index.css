@@ -55,6 +55,31 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+  
+  /* Enhanced scroll behavior */
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: hsl(240 25% 12%);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: hsl(250 30% 40%);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(250 30% 50%);
+  }
 }
 
 @layer components {
@@ -102,5 +127,92 @@
   .hologram-glow::after {
     content: "";
     @apply absolute top-0 left-0 right-0 bottom-0 bg-kaal-primary/20 blur-xl -z-10 rounded-full;
+  }
+  
+  /* Enhanced background styles */
+  .engineer-bg {
+    background: linear-gradient(180deg, rgba(37, 38, 62, 1) 0%, rgba(26, 31, 44, 1) 100%);
+  }
+  
+  .commander-bg {
+    background: linear-gradient(180deg, rgba(44, 27, 27, 1) 0%, rgba(26, 31, 44, 1) 100%);
+  }
+  
+  /* Enhanced interactive elements */
+  .interactive-element {
+    @apply transition-all duration-300 hover:scale-105 cursor-pointer;
+  }
+  
+  /* Tooltip styles */
+  .custom-tooltip {
+    @apply bg-muted/90 backdrop-blur-sm text-foreground px-3 py-2 rounded-md shadow-lg border border-muted z-50;
+  }
+  
+  /* Immersive section transitions */
+  .section-transition {
+    @apply transition-all duration-500 ease-in-out;
+  }
+  
+  /* Technical data display */
+  .data-display {
+    @apply font-mono text-sm bg-muted/30 rounded p-2 border border-muted;
+  }
+  
+  /* Animated connections */
+  .connection-line {
+    @apply h-0.5 bg-gradient-to-r from-kaal-primary to-transparent;
+    animation: pulse-flow 2s infinite;
+  }
+  
+  /* Hoverable components */
+  .hoverable-component {
+    @apply transition-all duration-300 hover:border-kaal-primary hover:shadow-[0_0_15px_rgba(155,135,245,0.3)];
+  }
+}
+
+@keyframes pulse-flow {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes drift {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes ripple-out {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes float-vertical {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    filter: brightness(100%) blur(5px);
+  }
+  50% {
+    filter: brightness(150%) blur(10px);
   }
 }
