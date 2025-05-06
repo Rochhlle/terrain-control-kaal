@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ModeToggle } from "./ModeToggle";
 import { StatusBar } from "./StatusBar";
 import { Badge } from "@/components/ui/badge";
-import { Bell, Settings, Info } from "lucide-react";
+import { Bell, Settings, Info, Download } from "lucide-react";
 import { 
   Tooltip, 
   TooltipContent, 
@@ -17,6 +17,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 
 interface HeaderProps {
   currentMode: "engineer" | "commander";
@@ -90,6 +91,32 @@ export function Header({ currentMode, onModeChange }: HeaderProps) {
         </motion.div>
 
         <div className="flex items-center space-x-6">
+          {/* Download Option */}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="hidden md:flex items-center gap-2 border-kaal-primary text-kaal-primary hover:bg-kaal-primary hover:text-white"
+                  asChild
+                >
+                  <a 
+                    href="https://drive.google.com/file/d/1OvUWK_zNXv3vOYzz1ZKOAUSiBrf9gq06/view?usp=sharing" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    <Download size={16} />
+                    <span>Download in other languages</span>
+                  </a>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Download to view in a different language</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
           <ModeToggle currentMode={currentMode} onModeChange={onModeChange} />
           
           <div className="hidden md:flex items-center space-x-4">
@@ -176,6 +203,19 @@ export function Header({ currentMode, onModeChange }: HeaderProps) {
       </div>
       <div className="px-4 mt-2">
         <StatusBar />
+      </div>
+
+      {/* Mobile download option */}
+      <div className="mt-2 px-4 md:hidden">
+        <a 
+          href="https://drive.google.com/file/d/1OvUWK_zNXv3vOYzz1ZKOAUSiBrf9gq06/view?usp=sharing" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 py-1.5 w-full bg-muted/30 backdrop-blur-sm rounded-md text-kaal-primary border border-kaal-primary"
+        >
+          <Download size={14} />
+          <span className="text-sm">Download in other languages</span>
+        </a>
       </div>
     </motion.header>
   );
