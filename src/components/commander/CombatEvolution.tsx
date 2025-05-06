@@ -66,11 +66,11 @@ export function CombatEvolution() {
                 <div 
                   className="w-full h-full"
                   style={{
-                    backgroundImage: `url('https://images.unsplash.com/photo-1466721591366-2d5fba72006d?auto=format&fit=crop&q=80')`,
+                    backgroundImage: `url('/lovable-uploads/77322e4b-09f6-4262-8e7f-4cf7d891ed53.png')`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    filter: 'grayscale(50%) brightness(0.7)',
-                    opacity: 0.5
+                    filter: 'grayscale(30%) brightness(0.8)',
+                    opacity: 0.7
                   }}
                 ></div>
                 
