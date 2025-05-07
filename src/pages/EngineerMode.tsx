@@ -8,6 +8,11 @@ import { TerrainSimulation } from "@/components/engineer/TerrainSimulation";
 import { HologramSystem } from "@/components/engineer/HologramSystem";
 import { SafetyDiagnostics } from "@/components/engineer/SafetyDiagnostics";
 import { TechStack } from "@/components/engineer/TechStack";
+import { ControlChainVisualization } from "@/components/engineer/ControlChainVisualization";
+import { TerrainEngineFlow } from "@/components/engineer/TerrainEngineFlow";
+import { HologramControlSystem } from "@/components/engineer/HologramControlSystem";
+import { FaultDetectionSystem } from "@/components/engineer/FaultDetectionSystem";
+import { HardwareMapping } from "@/components/engineer/HardwareMapping";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
@@ -34,10 +39,15 @@ export default function EngineerMode() {
   // Define section links for navigation
   const sections = [
     { id: "overview", name: "System Overview" },
+    { id: "control-chain", name: "Control Chain" },
     { id: "hardware", name: "Hardware Control" },
     { id: "environmental", name: "Environmental Effects" },
     { id: "terrain", name: "Terrain Simulation" },
+    { id: "terrain-flow", name: "Terrain Engine" },
     { id: "hologram", name: "Hologram System" },
+    { id: "hologram-control", name: "Hologram Control" },
+    { id: "fault-detection", name: "Fault Detection" },
+    { id: "hardware-mapping", name: "Hardware Mapping" },
     { id: "safety", name: "Safety Diagnostics" },
     { id: "tech", name: "Technology Stack" },
   ];
@@ -107,6 +117,12 @@ export default function EngineerMode() {
         
         <Separator />
         
+        <div id="control-chain" onMouseEnter={() => handleSectionEnter('control-chain')}>
+          <ControlChainVisualization />
+        </div>
+        
+        <Separator />
+        
         <div id="hardware" onMouseEnter={() => handleSectionEnter('hardware')}>
           <HardwareControl />
         </div>
@@ -125,8 +141,32 @@ export default function EngineerMode() {
         
         <Separator />
         
+        <div id="terrain-flow" onMouseEnter={() => handleSectionEnter('terrain-flow')}>
+          <TerrainEngineFlow />
+        </div>
+        
+        <Separator />
+        
         <div id="hologram" onMouseEnter={() => handleSectionEnter('hologram')}>
           <HologramSystem />
+        </div>
+        
+        <Separator />
+        
+        <div id="hologram-control" onMouseEnter={() => handleSectionEnter('hologram-control')}>
+          <HologramControlSystem />
+        </div>
+        
+        <Separator />
+        
+        <div id="fault-detection" onMouseEnter={() => handleSectionEnter('fault-detection')}>
+          <FaultDetectionSystem />
+        </div>
+        
+        <Separator />
+        
+        <div id="hardware-mapping" onMouseEnter={() => handleSectionEnter('hardware-mapping')}>
+          <HardwareMapping />
         </div>
         
         <Separator />
