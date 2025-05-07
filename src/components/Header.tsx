@@ -64,11 +64,18 @@ export function Header({ currentMode, onModeChange }: HeaderProps) {
           className="flex items-center space-x-4"
           whileHover={{ scale: 1.02 }}
         >
-          <h1 
-            className="text-2xl font-bold tracking-tighter cursor-pointer flex items-center"
+          <div 
+            className="cursor-pointer flex items-center"
             onClick={() => navigate("/")}
           >
-            PROJECT <span className="text-kaal-primary ml-1">KAAL</span>
+            <img 
+              src="/lovable-uploads/7b825a42-916d-4b3d-b7b6-8fd4d30ef9e7.png" 
+              alt="Project KAAL Logo" 
+              className="h-10 mr-3" 
+            />
+            <h1 className="text-2xl font-bold tracking-tighter hidden sm:block">
+              PROJECT <span className="text-kaal-primary ml-1">KAAL</span>
+            </h1>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -79,7 +86,7 @@ export function Header({ currentMode, onModeChange }: HeaderProps) {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-          </h1>
+          </div>
           <Badge 
             variant="outline" 
             className={`uppercase transition-colors duration-500 ${

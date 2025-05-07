@@ -37,6 +37,19 @@ const Index = () => {
       
       <div className="container mx-auto px-4 pt-28">
         <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="flex flex-col items-center mb-8"
+        >
+          <img 
+            src="/lovable-uploads/7b825a42-916d-4b3d-b7b6-8fd4d30ef9e7.png" 
+            alt="Project KAAL Logo" 
+            className="h-28 mb-4 filter drop-shadow-lg" 
+          />
+        </motion.div>
+
+        <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
