@@ -12,8 +12,6 @@ import {
   Thermometer,
   StopCircle,
   RotateCcw,
-  AlertTriangle,
-  AlertCircle,
   Clock,
   ShieldCheck,
   BatteryCharging,
@@ -25,7 +23,6 @@ export function SafetyDiagnostics() {
   const [temperature, setTemperature] = useState(42);
   const [relayResponse, setRelayResponse] = useState(28);
   const [watchdogStatus, setWatchdogStatus] = useState("active");
-  const [safetyCondition, setSafetyCondition] = useState<"normal" | "warning" | "critical">("normal");
 
   // Simulate fluctuating values
   useEffect(() => {
@@ -42,10 +39,7 @@ export function SafetyDiagnostics() {
       
       setTemperature((prev) => {
         const newValue = prev + (Math.random() * 2 - 1);
-        const temp = Math.min(Math.max(newValue, 38), 52);
-        if (temp > 50) setSafetyCondition("warning");
-        else if (temp > 46) setSafetyCondition("normal");
-        return temp;
+        return Math.min(Math.max(newValue, 38), 52);
       });
       
       setRelayResponse((prev) => {
@@ -156,101 +150,6 @@ export function SafetyDiagnostics() {
             </div>
           </CardContent>
         </Card>
-
-        <Card className={`border-${safetyCondition === "critical" ? "red-500" : safetyCondition === "warning" ? "yellow-500" : "muted"}`}>
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center justify-between">
-              <div className="flex items-center">
-                <AlertCircle size={18} className="mr-2 text-kaal-primary" />
-                Safety Status
-              </div>
-              <Badge 
-                variant="outline" 
-                className={
-                  safetyCondition === "critical" 
-                    ? "bg-red-500/10 border-red-500 text-red-500" 
-                    : safetyCondition === "warning" 
-                      ? "bg-yellow-500/10 border-yellow-500 text-yellow-500" 
-                      : "bg-green-500/10 border-green-500 text-green-500"
-                }
-              >
-                {safetyCondition === "critical" ? "CRITICAL" : safetyCondition === "warning" ? "WARNING" : "NORMAL"}
-              </Badge>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center p-2 bg-muted/20 border border-muted rounded">
-                <div className="flex items-center">
-                  <AlertTriangle size={16} className="mr-2 text-yellow-500" />
-                  <span className="text-sm">Watchdog Timer</span>
-                </div>
-                <Badge 
-                  variant="outline" 
-                  className={
-                    watchdogStatus === "active" 
-                      ? "bg-green-500/10 border-green-500 text-green-500" 
-                      : watchdogStatus === "restarting"
-                        ? "bg-yellow-500/10 border-yellow-500 text-yellow-500" 
-                        : "bg-red-500/10 border-red-500 text-red-500"
-                  }
-                >
-                  {watchdogStatus.toUpperCase()}
-                </Badge>
-              </div>
-              
-              <div className="flex justify-between items-center p-2 bg-muted/20 border border-muted rounded">
-                <div className="flex items-center">
-                  <StopCircle size={16} className="mr-2 text-red-500" />
-                  <span className="text-sm">Emergency Shutdown</span>
-                </div>
-                <Badge variant="outline" className="bg-green-500/10 border-green-500 text-green-500">
-                  READY
-                </Badge>
-              </div>
-              
-              <div className="flex justify-between items-center p-2 bg-muted/20 border border-muted rounded">
-                <div className="flex items-center">
-                  <RotateCcw size={16} className="mr-2 text-blue-500" />
-                  <span className="text-sm">Automatic Recovery</span>
-                </div>
-                <Badge variant="outline" className="bg-green-500/10 border-green-500 text-green-500">
-                  ENABLED
-                </Badge>
-              </div>
-              
-              <div className="flex justify-between items-center p-2 bg-muted/20 border border-muted rounded">
-                <div className="flex items-center">
-                  <Activity size={16} className="mr-2 text-kaal-primary" />
-                  <span className="text-sm">System Heartbeat</span>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-2 h-2 rounded-full bg-green-500 mr-1 animate-pulse"></div>
-                  <span className="text-xs text-green-500">60ms</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 mt-3">
-                <Button 
-                  variant="destructive"
-                  size="sm"
-                  className="w-full"
-                >
-                  <StopCircle className="mr-1 h-4 w-4" /> Emergency Stop
-                </Button>
-                <Button 
-                  variant="outline"
-                  size="sm"
-                  className="w-full"
-                  onClick={handleWatchdogReset}
-                  disabled={watchdogStatus === "restarting"}
-                >
-                  <RotateCcw className={`mr-1 h-4 w-4 ${watchdogStatus === "restarting" ? "animate-spin" : ""}`} /> Reset Watchdog
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -298,7 +197,7 @@ export function SafetyDiagnostics() {
           
           <div className="mt-4 p-2 rounded bg-red-500/5 border border-red-500/30 text-xs">
             <div className="flex items-center mb-1">
-              <AlertTriangle size={14} className="text-red-500 mr-1" />
+              <StopCircle size={14} className="text-red-500 mr-1" />
               <span className="font-medium">Response Time:</span>
             </div>
             <ul className="list-disc list-inside ml-4 space-y-0.5">
