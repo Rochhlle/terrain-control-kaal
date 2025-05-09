@@ -76,12 +76,12 @@ export function StatusBar() {
   
   return (
     <div className="flex overflow-x-auto scrollbar-hide py-1 px-2 bg-muted/20 backdrop-blur-sm rounded-md">
-      <div className="flex items-center space-x-6 min-w-full justify-between">
+      <div className="flex items-center space-x-2 sm:space-x-4 md:space-x-6 min-w-full justify-between">
         {systems.map((system, index) => (
           <TooltipProvider key={index}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="flex items-center gap-2 p-0.5">
+                <div className="flex items-center gap-1 p-0.5">
                   <system.icon size={14} className="text-muted-foreground" />
                   <span className="hidden md:inline-block text-xs text-muted-foreground">
                     {system.name}:
