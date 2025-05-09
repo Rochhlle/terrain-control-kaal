@@ -12,23 +12,15 @@ import {
   Layers,
   Map,
   FileVideo,
-  Play,
   Code,
   Workflow,
   Cloud,
   ArrowRight
 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 export function TerrainSimulation() {
-  const [activeDemo, setActiveDemo] = useState<string | null>(null);
-
-  const handleDemoStart = (demoId: string) => {
-    setActiveDemo(demoId === activeDemo ? null : demoId);
-  };
-
   return (
     <div className="system-border p-4 rounded-lg">
       <h2 className="text-xl font-semibold mb-4 flex items-center">
@@ -85,7 +77,7 @@ export function TerrainSimulation() {
                 <CardDescription>UE5 Event Trigger</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="bg-muted/20 p-3 rounded-lg border border-muted mb-3">
+                <div className="bg-muted/20 p-3 rounded-lg border border-muted">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium">Blueprint Path</span>
                     <Badge variant="outline" className="text-xs">BP_EnvironmentController</Badge>
@@ -96,15 +88,6 @@ export function TerrainSimulation() {
                   <div className="font-mono text-xs ml-3 mb-1">- PlaySound("FogMachine")</div>
                   <div className="font-mono text-xs text-muted-foreground">{"}"}</div>
                 </div>
-                <Button 
-                  variant={activeDemo === "fog" ? "default" : "outline"} 
-                  size="sm" 
-                  className="w-full"
-                  onClick={() => handleDemoStart("fog")}
-                >
-                  <Play className="mr-2 h-4 w-4" /> 
-                  {activeDemo === "fog" ? "Stop Demo" : "Run Demo"}
-                </Button>
               </CardContent>
             </Card>
             
@@ -117,7 +100,7 @@ export function TerrainSimulation() {
                 <CardDescription>Dynamic Lumen Effects</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="bg-muted/20 p-3 rounded-lg border border-muted mb-3">
+                <div className="bg-muted/20 p-3 rounded-lg border border-muted">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium">Blueprint Path</span>
                     <Badge variant="outline" className="text-xs">BP_LightingManager</Badge>
@@ -128,15 +111,6 @@ export function TerrainSimulation() {
                   <div className="font-mono text-xs ml-3 mb-1">- TriggerPostProcess</div>
                   <div className="font-mono text-xs text-muted-foreground">{"}"}</div>
                 </div>
-                <Button 
-                  variant={activeDemo === "lighting" ? "default" : "outline"} 
-                  size="sm" 
-                  className="w-full"
-                  onClick={() => handleDemoStart("lighting")}
-                >
-                  <Play className="mr-2 h-4 w-4" /> 
-                  {activeDemo === "lighting" ? "Stop Demo" : "Run Demo"}
-                </Button>
               </CardContent>
             </Card>
             
@@ -149,7 +123,7 @@ export function TerrainSimulation() {
                 <CardDescription>Landscape Transitions</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="bg-muted/20 p-3 rounded-lg border border-muted mb-3">
+                <div className="bg-muted/20 p-3 rounded-lg border border-muted">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium">Blueprint Path</span>
                     <Badge variant="outline" className="text-xs">BP_TerrainMorphController</Badge>
@@ -160,15 +134,6 @@ export function TerrainSimulation() {
                   <div className="font-mono text-xs ml-3 mb-1">- UpdateCollision</div>
                   <div className="font-mono text-xs text-muted-foreground">{"}"}</div>
                 </div>
-                <Button 
-                  variant={activeDemo === "terrain" ? "default" : "outline"} 
-                  size="sm" 
-                  className="w-full"
-                  onClick={() => handleDemoStart("terrain")}
-                >
-                  <Play className="mr-2 h-4 w-4" /> 
-                  {activeDemo === "terrain" ? "Stop Demo" : "Run Demo"}
-                </Button>
               </CardContent>
             </Card>
           </div>
